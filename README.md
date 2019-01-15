@@ -18,7 +18,7 @@ Arr::get($array, $key, $default = null)
 ```
 Gets a value from an array using dot notation. If given key is not existing in array, function returns `null` (for default) or given default value (or result of closure).
 
-_**Notice:** `Arr::get()` is optimised for performance on dot notated keys. If you are not using dot-notation it is better (for performance) to use regular array manipelations._
+_**Notice:** `Arr::get()` is optimised for performance on dot notated keys. If you are not using dot-notation it is better (for performance) to use regular array manipulations._
 #### Examples:
 ```php
     $array = ['level1' => ['level2' => 'value']];
@@ -42,14 +42,14 @@ _**Notice:** `Arr::get()` is optimised for performance on dot notated keys. If y
 ```
 
 ### Setting a value using dot notation
-```
+```php
 Arr::set($array, $key, $value): array
 ```
 Sets a value in array for given key using dot notation. Function modifies given array directly, but also returns modified array for convenient usage.     
 
-_**Notice:** `Arr::set()` is optimised for performance on dot notated keys. If you are not using dot-notation it is better (for performance) to use regular array manipelations._
+_**Notice:** `Arr::set()` is optimised for performance on dot notated keys. If you are not using dot-notation it is better (for performance) to use regular array manipulations._
 ### Examples:
-```
+```php
     $array = ['level1' => ['level2' => 'value']];
     $result = Arr::set($array, 'level1.level2_1', 'another value');
     // $result = ['level1' => ['level2' => 'value', 'level2_1' => 'another value']]
