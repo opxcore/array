@@ -55,3 +55,8 @@ _**Notice:** `Arr::set()` is optimised for performance on dot notated keys. If y
     // $result = ['level1' => ['level2' => 'value', 'level2_1' => 'another value']]
     // $array is same as $result
 ```
+
+## TODO:
+Arr::only for dot notation
+
+Arr::pull for multiple keys
