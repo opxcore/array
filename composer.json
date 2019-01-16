@@ -16,18 +16,12 @@
     "require": {
         "php": "^7.1.3"
     },
+    "require-dev": {
+        "phpunit/phpunit": "^7.5"
+    },
     "autoload": {
         "psr-4": {
             "OpxCore\\Arr\\": "src"
         }
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "0.2-dev"
-        }
-    },
-    "config": {
-        "sort-packages": true
-    },
-    "minimum-stability": "dev"
+    }
 }
