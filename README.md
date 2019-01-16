@@ -1,5 +1,11 @@
 # Array utils
 
+[![Build Status](https://travis-ci.org/opxcore/array.svg?branch=master)](https://travis-ci.org/opxcore/array)
+[![Coverage Status](https://coveralls.io/repos/github/opxcore/array/badge.svg?branch=master)](https://coveralls.io/github/opxcore/array?branch=master)
+[![Latest Stable Version](https://poser.pugx.org/opxcore/array/v/stable)](https://packagist.org/packages/opxcore/array)
+[![Total Downloads](https://poser.pugx.org/opxcore/array/downloads)](https://packagist.org/packages/opxcore/array)
+[![License](https://poser.pugx.org/opxcore/array/license)](https://packagist.org/packages/opxcore/array)
+
 ## Usage
 ### Make a dot notated array
 ```php
