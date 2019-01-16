@@ -88,6 +88,57 @@ class ForgetTest extends TestCase
         $this->assertEquals($array, $result);
     }
 
+    public function testDeepArrayOneKeyTwo(): void
+    {
+        $array = $this->deepArray;
+
+        $result = Arr::forget($array, 'k1.k1_1');
+
+        $this->assertEquals([
+            'k1' => [
+                'k1_2' => 'v2'
+            ]
+        ], $result);
+
+        $this->assertEquals($array, $result);
+    }
+
+    public function testDeepArrayOneKeyMore(): void
+    {
+        $array = $this->deepArray;
+
+        $result = Arr::forget($array, 'k1.k1_2.kn');
+
+        $this->assertEquals([
+            'k1' => [
+                'k1_1' => [
+                    'k1_2' => 'v1_1',
+                ],
+                'k1_2' => 'v2',
+            ],
+        ], $result);
+
+        $this->assertEquals($array, $result);
+    }
+
+    public function testDeepArrayOneKeyAndMore(): void
+    {
+        $array = $this->deepArray;
+
+        $result = Arr::forget($array, 'k1.k1_2.kn.kt');
+
+        $this->assertEquals([
+            'k1' => [
+                'k1_1' => [
+                    'k1_2' => 'v1_1',
+                ],
+                'k1_2' => 'v2',
+            ],
+        ], $result);
+
+        $this->assertEquals($array, $result);
+    }
+
     public function testDeepArrayOneKeys(): void
     {
         $array = $this->deepArray;

@@ -254,12 +254,14 @@ class Arr
             $lastKey = end($keysToSearch);
 
             foreach ($keysToSearch as $iterationKey) {
+                if (!is_array($link)) {
+                    continue 2;
+                }
+
                 if ($iterationKey === $lastKey) {
                     unset($link[$lastKey]);
                 } elseif (isset($link[$iterationKey]) || array_key_exists($iterationKey, $link)) {
                     $link = &$link[$iterationKey];
-                } else {
-                    continue 2;
                 }
             }
         }
