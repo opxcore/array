@@ -1,9 +1,9 @@
 {
     "name": "opxcore/array",
     "description": "The OpxCore array utils.",
+    "type": "library",
     "keywords": ["dot notation", "array"],
     "license": "MIT",
-    "homepage": "https://opxcms.com",
     "support": {
         "issues": "https://github.com/opxcore/array/issues",
         "source": "https://github.com/opxcore/array"
