@@ -95,11 +95,19 @@ class Arr
         $keys = (array)$keys;
 
         foreach ($keys as $keyToSearch) {
+
             $link = &$array;
 
-            foreach (explode('.', $keyToSearch) as $iterationKey) {
+            $keyStack = explode('.', $keyToSearch);
+
+            $lastKey = end($keyStack);
+
+            foreach ($keyStack as $iterationKey) {
                 if (isset($link[$iterationKey]) || array_key_exists($iterationKey, $link)) {
                     $link = &$link[$iterationKey];
+                    if (!is_array($link) && ($iterationKey !== $lastKey)) {
+                        return false;
+                    }
                 } else {
                     return false;
                 }
@@ -219,9 +227,16 @@ class Arr
 
         $link = &$array;
 
-        foreach (explode('.', $key) as $iterationKey) {
+        $keyStack = explode('.', $key);
+
+        $lastKey = end($keyStack);
+
+        foreach ($keyStack as $iterationKey) {
             if (isset($link[$iterationKey]) || array_key_exists($iterationKey, $link)) {
                 $link = &$link[$iterationKey];
+                if (!is_array($link) && ($iterationKey !== $lastKey)) {
+                    return static::value($default);
+                }
             } else {
                 return static::value($default);
             }
@@ -254,14 +269,13 @@ class Arr
             $lastKey = end($keysToSearch);
 
             foreach ($keysToSearch as $iterationKey) {
-                if (!is_array($link)) {
-                    continue 2;
-                }
-
                 if ($iterationKey === $lastKey) {
                     unset($link[$lastKey]);
                 } elseif (isset($link[$iterationKey]) || array_key_exists($iterationKey, $link)) {
                     $link = &$link[$iterationKey];
+                    if (!is_array($link) && ($iterationKey !== $lastKey)) {
+                        continue 2;
+                    }
                 }
             }
         }
