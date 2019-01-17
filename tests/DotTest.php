@@ -5,49 +5,58 @@ use OpxCore\Arr\Arr;
 
 class DotTest extends TestCase
 {
-    public function testDotNotArray(): void
+    public function dotTestRun($set, $expected): void
     {
-        $result = Arr::dot('val');
+        $result = Arr::dot($set);
 
-        $this->assertEquals(null, $result);
+        $this->assertEquals($expected, $result);
     }
 
-    public function testDotEmptyArray(): void
+    public function test_Not_Array(): void
     {
-        $result = Arr::dot([]);
-
-        $this->assertEquals([], $result);
+        $set = 'val';
+        $expected = null;
+        $this->dotTestRun($set, $expected);
     }
 
-    public function testSingleLevelArray(): void
+    public function test_Empty_Array(): void
     {
-        $result = Arr::dot([
+        $set = [];
+        $expected = [];
+        $this->dotTestRun($set, $expected);
+    }
+
+    public function test_Single_Level_Array(): void
+    {
+        $set = [
             'k1' => 'v1',
             'k2' => 'v2',
-        ]);
-
-        $this->assertEquals([
+        ];
+        $expected = [
             'k1' => 'v1',
             'k2' => 'v2',
-        ], $result);
+        ];
+        $this->dotTestRun($set, $expected);
     }
 
-    public function testTwoLevelArray(): void
+    public function test_Multidimensional_Array(): void
     {
-        $result = Arr::dot([
+        $set = [
             'k1' => [
                 'k1_1' => 'v1_1',
             ],
             'k2' => [
                 'k2_1' => 'v2_1',
-                'k2_2' => 'v2_2',
-            ]
-        ]);
-
-        $this->assertEquals([
+                'k2_2' => [
+                    'k3_1' => 'v3_1',
+                ],
+            ],
+        ];
+        $expected = [
             'k1.k1_1' => 'v1_1',
             'k2.k2_1' => 'v2_1',
-            'k2.k2_2' => 'v2_2',
-        ], $result);
+            'k2.k2_2.k3_1' => 'v3_1',
+        ];
+        $this->dotTestRun($set, $expected);
     }
 }

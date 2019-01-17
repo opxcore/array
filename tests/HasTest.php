@@ -5,130 +5,146 @@ use OpxCore\Arr\Arr;
 
 class HasTest extends TestCase
 {
-    protected $simpleArray = [
-        'k1' => 'v1',
-        'k2' => 'v2',
-    ];
-
-    protected $deepArray = [
-        'k1' => [
-            'k1_1' => [
-                'k1_2' => 'v1_1',
-            ],
-            'k1_2' => 'v2',
-        ],
-    ];
-
-    public function testNotArray(): void
+   public function runHasTest($array, $keys, $expected): void
     {
-        $result = Arr::has(null, 'k1');
+        $result = Arr::has($array, $keys);
 
-        $this->assertFalse($result);
+        $this->assertEquals($expected, $result);
     }
 
-    public function testEmptyArray(): void
+    public function test_Not_Array(): void
     {
-        $result = Arr::has([], 'k1');
+        $array = 'value';
+        $keys = 'key';
+        $expected = false;
 
-        $this->assertFalse($result);
+        $this->runHasTest($array, $keys, $expected);
     }
 
-    public function testArrayNoKeys(): void
+    public function test_Null_Array(): void
     {
-        $result = Arr::has(['v1'], 'k1');
+        $array = null;
+        $keys = 'key';
+        $expected = false;
 
-        $this->assertFalse($result);
+        $this->runHasTest($array, $keys, $expected);
     }
 
-    public function testArrayNullKeys(): void
+    public function test_Empty_Array(): void
     {
-        $result = Arr::has($this->simpleArray, null);
+        $array = [];
+        $keys = 'key';
+        $expected = false;
 
-        $this->assertFalse($result);
+        $this->runHasTest($array, $keys, $expected);
     }
 
-    public function testArrayEmptyKeys(): void
+    public function test_Null_Keys(): void
     {
-        $result = Arr::has($this->simpleArray, '');
+        $array = ['k1' => 'v1'];
+        $keys = null;
+        $expected = false;
 
-        $this->assertFalse($result);
+        $this->runHasTest($array, $keys, $expected);
     }
 
-    public function testArrayEmptyArrayKeys(): void
+    public function test_Empty_Keys(): void
     {
-        $result = Arr::has($this->simpleArray, []);
+        $array = ['k1' => 'v1'];
+        $keys = '';
+        $expected = false;
 
-        $this->assertFalse($result);
+        $this->runHasTest($array, $keys, $expected);
     }
 
-    public function testSimpleSingleHas(): void
+    public function test_Empty_Array_Keys(): void
     {
-        $result = Arr::has($this->simpleArray, 'k1');
+        $array = ['k1' => 'v1'];
+        $keys = [];
+        $expected = false;
 
-        $this->assertTrue($result);
+        $this->runHasTest($array, $keys, $expected);
     }
 
-    public function testSimpleSingleHasNot(): void
+    public function test_One_Key_Simple_Array_Has(): void
     {
-        $result = Arr::has($this->simpleArray, 'k3');
+        $array = ['k1' => 'v1', 'k2' => 'v2', 'k3' => 'v3'];
+        $keys = 'k3';
+        $expected = true;
 
-        $this->assertFalse($result);
+        $this->runHasTest($array, $keys, $expected);
     }
 
-    public function testSimpleMultipleHas(): void
+    public function test_One_Key_Simple_Array_Has_No(): void
     {
-        $result = Arr::has($this->simpleArray, ['k1', 'k2']);
+        $array = ['k1' => 'v1', 'k2' => 'v2', 'k3' => 'v3'];
+        $keys = 'k4';
+        $expected = false;
 
-        $this->assertTrue($result);
+        $this->runHasTest($array, $keys, $expected);
     }
 
-    public function testSimpleMultipleHasNotOne(): void
+    public function test_Two_Keys_Simple_Array_Has(): void
     {
-        $result = Arr::has($this->simpleArray, ['k1', 'k3']);
+        $array = ['k1' => 'v1', 'k2' => 'v2', 'k3' => 'v3'];
+        $keys = ['k1', 'k3'];
+        $expected = true;
 
-        $this->assertFalse($result);
+        $this->runHasTest($array, $keys, $expected);
     }
 
-    public function testSimpleMultipleHasNot(): void
+    public function test_Two_Keys_Simple_Array_Has_No_One(): void
     {
-        $result = Arr::has($this->simpleArray, ['k3', 'k4']);
+        $array = ['k1' => 'v1', 'k2' => 'v2', 'k3' => 'v3'];
+        $keys = ['k1', 'k4'];
+        $expected = false;
 
-        $this->assertFalse($result);
+        $this->runHasTest($array, $keys, $expected);
     }
 
-    public function testDeepMultipleHasOne(): void
+    public function test_Two_Keys_Simple_Array_Has_No_One_Another(): void
     {
-        $result = Arr::has($this->deepArray, 'k1.k1_1.k1_2');
+        $array = ['k1' => 'v1', 'k2' => 'v2', 'k3' => 'v3'];
+        $keys = ['k4', 'k1'];
+        $expected = false;
 
-        $this->assertTrue($result);
+        $this->runHasTest($array, $keys, $expected);
     }
 
-    public function testDeepMultipleHasNotOne(): void
+    public function test_Two_Keys_Simple_Array_Has_No_All(): void
     {
-        $result = Arr::has($this->deepArray, 'k1.k1_1.k1_3');
+        $array = ['k1' => 'v1', 'k2' => 'v2', 'k3' => 'v3'];
+        $keys = ['k4', 'k5'];
+        $expected = false;
 
-        $this->assertFalse($result);
+        $this->runHasTest($array, $keys, $expected);
     }
 
-    public function testDeepMultipleHasMany(): void
+    public function test_One_Key_Deep_Array_Has(): void
     {
-        $result = Arr::has($this->deepArray, ['k1.k1_1.k1_2', 'k1.k1_2']);
+        $array = ['k1_1' => ['k1_2' => 'val1'], 'k2_1' => ['k2_2' => 'val2'], 'k3_1' => ['k3_2' => 'val3']];
+        $keys = 'k2_1.k2_2';
+        $expected = true;
 
-        $this->assertTrue($result);
+        $this->runHasTest($array, $keys, $expected);
     }
 
-    public function testDeepMultipleHasNotMany(): void
+    public function test_One_Key_Deep_Array_Has_Array(): void
     {
-        $result = Arr::has($this->deepArray, ['k1.k1_1.k1_3', 'k1.k1_2']);
+        $array = ['k1_1' => ['k1_2' => 'val1'], 'k2_1' => ['k2_2' => 'val2'], 'k3_1' => ['k3_2' => 'val3']];
+        $keys = 'k2_1';
+        $expected = true;
 
-        $this->assertFalse($result);
+        $this->runHasTest($array, $keys, $expected);
     }
 
-    public function testDeepMultipleHasNoMany(): void
+    public function test_One_Key_Deep_Array_Has_No_Deeper(): void
     {
-        $result = Arr::has($this->deepArray, ['k1.k1_1.k1_3', 'k2.k1_2']);
+        $array = ['k1_1' => ['k1_2' => 'val1'], 'k2_1' => ['k2_2' => 'val2'], 'k3_1' => ['k3_2' => 'val3']];
+        $keys = 'k2_1.k2_2.k2_3';
+        $expected = false;
 
-        $this->assertFalse($result);
+        $this->runHasTest($array, $keys, $expected);
     }
 
 }
