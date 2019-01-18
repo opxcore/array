@@ -282,4 +282,22 @@ class Arr
 
         return $array;
     }
+
+    /**
+     * Push value into the array.
+     *
+     * @param  array $array
+     * @param  string $key
+     * @param  mixed $value
+     *
+     * @return  array
+     */
+    public static function push(&$array, $key, $value): array
+    {
+        $arr = (array)static::get($array, $key, []);
+
+        $arr[] = $value;
+
+        return static::set($array, $key, $arr);
+    }
 }

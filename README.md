@@ -20,6 +20,7 @@ For dot notation:
 * `OpxCore\Arr\Arr::has($array, $keys)`
 * `OpxCore\Arr\Arr::forget($array, $keys)`
 * `OpxCore\Arr\Arr::pull($array, $key, $default)`
+* `OpxCore\Arr\Arr::push($array, $key, $value)`
 
 Regular arrays only:
 * `OpxCore\Arr\Arr::only($array, $keys)`
@@ -137,3 +138,22 @@ array, default value will be returned.
     // $result === 'value' 
     // $array === ['level1' => ['level2_1' => 'another value']]
 ```   
+
+### Pushing the value into the array
+```php
+OpxCore\Arr\Arr::push($array, $key, $value)
+```
+Pushes the value into the given key in array. If given key is not existing, it will be 
+created and the value will be set as item of unassociated array. If the key is existing,
+value associated with this key will be casted as array and value will be added into it.
+Function modifies given array  directly, but also returns modified array for convenient 
+usage.
+```php
+        use OpxCore\Arr\Arr;
+        
+        $array = ['level1' => ['level2' => 'value']];
+        
+        $result = Arr::push($array, 'level1.level2', 'another value');
+        // $result === ['level1' => ['level2' => ['value', 'another value']]] 
+        // $array === $result
+```
