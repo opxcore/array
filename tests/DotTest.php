@@ -59,4 +59,25 @@ class DotTest extends TestCase
         ];
         $this->dotTestRun($set, $expected);
     }
+
+    public function test_Multidimensional_Array_With_Unassociated(): void
+    {
+        $set = [
+            'k1' => [
+                'k1_1' => 'v1_1',
+            ],
+            'k2' => [
+                'k2_1' => 'v2_1',
+                'k2_2' => [
+                    'v3_1', 'v3_2',
+                ],
+            ],
+        ];
+        $expected = [
+            'k1.k1_1' => 'v1_1',
+            'k2.k2_1' => 'v2_1',
+            'k2.k2_2' => ['v3_1', 'v3_2'],
+        ];
+        $this->dotTestRun($set, $expected);
+    }
 }

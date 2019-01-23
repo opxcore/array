@@ -33,6 +33,12 @@ class Arr
         $results = [[]];
 
         foreach ($array as $key => $value) {
+            // If one of keys is numeric we have an unassociated array and we do not
+            // need to iterate it. Just return this array as result for given key.
+            if(is_numeric($key)) {
+                return [rtrim($prepend, '.') => $array];
+            }
+
             if (!empty($value) && is_array($value)) {
                 $results[] = static::makeDotArray($value, $prepend . $key . '.');
             } else {
