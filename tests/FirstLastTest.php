@@ -5,12 +5,12 @@ use OpxCore\Arr\Arr;
 
 class FirstLastTest extends TestCase
 {
-    protected $simpleArray = [
+    protected array $simpleArray = [
         'k1' => 'v1',
         'k2' => 'v2',
     ];
 
-    protected $deepArray = [
+    protected array $deepArray = [
         'k1' => [
             'k1_1' => [
                 'k1_2' => 'v1_1',
@@ -23,7 +23,7 @@ class FirstLastTest extends TestCase
     {
         $result = Arr::first([], null, -1);
 
-        $this->assertEquals(-1, $result);
+        self::assertEquals(-1, $result);
     }
 
     public function testFirstSimple(): void
@@ -32,7 +32,7 @@ class FirstLastTest extends TestCase
 
         $result = Arr::first($array);
 
-        $this->assertEquals('v1', $result);
+        self::assertEquals('v1', $result);
     }
 
     public function testFirstSimpleClosure(): void
@@ -43,7 +43,7 @@ class FirstLastTest extends TestCase
             return $key === 'k2';
         });
 
-        $this->assertEquals('v2', $result);
+        self::assertEquals('v2', $result);
     }
 
     public function testFirstSimpleClosureNot(): void
@@ -54,14 +54,14 @@ class FirstLastTest extends TestCase
             return $key === 'k3';
         });
 
-        $this->assertEquals(null, $result);
+        self::assertEquals(null, $result);
     }
 
     public function testLastSimpleEmptyArray(): void
     {
         $result = Arr::last([], null, -1);
 
-        $this->assertEquals(-1, $result);
+        self::assertEquals(-1, $result);
     }
 
     public function testLastSimple(): void
@@ -70,7 +70,7 @@ class FirstLastTest extends TestCase
 
         $result = Arr::last($array);
 
-        $this->assertEquals('v2', $result);
+        self::assertEquals('v2', $result);
     }
 
     public function testLastSimpleClosure(): void
@@ -81,7 +81,7 @@ class FirstLastTest extends TestCase
             return $key === 'k1';
         });
 
-        $this->assertEquals('v1', $result);
+        self::assertEquals('v1', $result);
     }
 
     public function testLastSimpleClosureNot(): void
@@ -92,7 +92,7 @@ class FirstLastTest extends TestCase
             return $key === 'k3';
         });
 
-        $this->assertEquals(null, $result);
+        self::assertEquals(null, $result);
     }
 
 

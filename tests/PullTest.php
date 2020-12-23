@@ -5,12 +5,12 @@ use OpxCore\Arr\Arr;
 
 class PullTest extends TestCase
 {
-    protected $simpleArray = [
+    protected array $simpleArray = [
         'k1' => 'v1',
         'k2' => 'v2',
     ];
 
-    protected $deepArray = [
+    protected array $deepArray = [
         'k1' => [
             'k1_1' => [
                 'k1_2' => 'v1_1',
@@ -25,7 +25,7 @@ class PullTest extends TestCase
 
         $result = Arr::pull($array, 'd', -1);
 
-        $this->assertEquals(-1, $result);
+        self::assertEquals(-1, $result);
     }
 
     public function testPullDeepArray(): void
@@ -34,9 +34,9 @@ class PullTest extends TestCase
 
         $result = Arr::pull($array, 'k1.k1_1');
 
-        $this->assertEquals(['k1_2' => 'v1_1'], $result);
+        self::assertEquals(['k1_2' => 'v1_1'], $result);
 
-        $this->assertEquals([
+        self::assertEquals([
             'k1' => [
                 'k1_2' => 'v2',
             ],

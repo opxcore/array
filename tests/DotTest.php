@@ -3,30 +3,23 @@
 use PHPUnit\Framework\TestCase;
 use OpxCore\Arr\Arr;
 
+
 class DotTest extends TestCase
 {
     public function dotTestRun($set, $expected): void
     {
         $result = Arr::dot($set);
 
-        $this->assertEquals($expected, $result);
+        self::assertEquals($expected, $result);
     }
-
-    public function test_Not_Array(): void
-    {
-        $set = 'val';
-        $expected = null;
-        $this->dotTestRun($set, $expected);
-    }
-
-    public function test_Empty_Array(): void
+    public function testEmptyArray(): void
     {
         $set = [];
         $expected = [];
         $this->dotTestRun($set, $expected);
     }
 
-    public function test_Single_Level_Array(): void
+    public function testSingleLevelArray(): void
     {
         $set = [
             'k1' => 'v1',
@@ -39,7 +32,7 @@ class DotTest extends TestCase
         $this->dotTestRun($set, $expected);
     }
 
-    public function test_Multidimensional_Array(): void
+    public function testMultidimensionalArray(): void
     {
         $set = [
             'k1' => [
@@ -60,7 +53,7 @@ class DotTest extends TestCase
         $this->dotTestRun($set, $expected);
     }
 
-    public function test_Multidimensional_Array_With_Unassociated(): void
+    public function testMultidimensionalArrayWithUnassociated(): void
     {
         $set = [
             'k1' => [

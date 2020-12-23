@@ -11,38 +11,20 @@ class SetTest extends TestCase
 
         $result = Arr::set($array, 'k1', 'v1');
 
-        $this->assertEquals([
+        self::assertEquals([
             'k1' => 'v1',
         ], $result);
 
-        $this->assertEquals($array, $result);
-    }
-
-    public function testSetNotArray(): void
-    {
-        $array = 'var';
-
-        $this->expectException(\InvalidArgumentException::class);
-
-        Arr::set($array, 'k1', 'v1');
+        self::assertEquals($array, $result);
     }
 
     public function testSetEmptyKey(): void
     {
         $array = [];
 
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
 
         Arr::set($array, '', 'v1');
-    }
-
-    public function testSetNotStringKey(): void
-    {
-        $array = [];
-
-        $this->expectException(\InvalidArgumentException::class);
-
-        Arr::set($array, 5, 'v1');
     }
 
     public function testSetEmptyArraySingleLevel(): void
@@ -52,12 +34,12 @@ class SetTest extends TestCase
         Arr::set($array, 'k1', 'v1');
         $result = Arr::set($array, 'k2', 'v2');
 
-        $this->assertEquals([
+        self::assertEquals([
             'k1' => 'v1',
             'k2' => 'v2',
         ], $result);
 
-        $this->assertEquals($array, $result);
+        self::assertEquals($array, $result);
     }
 
     public function testSetEmptyArrayDeepLevel(): void
@@ -67,14 +49,14 @@ class SetTest extends TestCase
         Arr::set($array, 'k1.k1_1', 'v1');
         $result = Arr::set($array, 'k1.k1_2', 'v2');
 
-        $this->assertEquals([
+        self::assertEquals([
             'k1' => [
                 'k1_1' => 'v1',
                 'k1_2' => 'v2',
             ],
         ], $result);
 
-        $this->assertEquals($array, $result);
+        self::assertEquals($array, $result);
     }
 
     public function testSetEmptyArrayDeepOverwrite(): void
@@ -88,7 +70,7 @@ class SetTest extends TestCase
 
         $result = Arr::set($array, 'k1.k1_1.k1_2', 'v1_1');
 
-        $this->assertEquals([
+        self::assertEquals([
             'k1' => [
                 'k1_1' => [
                     'k1_2' => 'v1_1',
@@ -97,6 +79,6 @@ class SetTest extends TestCase
             ],
         ], $result);
 
-        $this->assertEquals($array, $result);
+        self::assertEquals($array, $result);
     }
 }

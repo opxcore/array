@@ -5,12 +5,12 @@ use OpxCore\Arr\Arr;
 
 class GetTest extends TestCase
 {
-    protected $simpleArray = [
+    protected array $simpleArray = [
         'k1' => 'v1',
         'k2' => 'v2',
     ];
 
-    protected $deepArray = [
+    protected array $deepArray = [
         'k1' => [
             'k1_1' => [
                 'k1_2' => 'v1_1',
@@ -23,28 +23,28 @@ class GetTest extends TestCase
     {
         $result = Arr::get(null, 'k1', -1);
 
-        $this->assertEquals(-1, $result);
+        self::assertEquals(-1, $result);
     }
 
     public function testEmptyKey(): void
     {
         $result = Arr::get($this->simpleArray, '', -1);
 
-        $this->assertEquals(-1, $result);
+        self::assertEquals(-1, $result);
     }
 
     public function testNullKey(): void
     {
         $result = Arr::get($this->simpleArray, null, -1);
 
-        $this->assertEquals(-1, $result);
+        self::assertEquals(-1, $result);
     }
 
     public function testNotStringKey(): void
     {
         $result = Arr::get($this->simpleArray, 10, -1);
 
-        $this->assertEquals(-1, $result);
+        self::assertEquals(-1, $result);
     }
 
     public function testClosureDefault(): void
@@ -53,35 +53,35 @@ class GetTest extends TestCase
             return -1;
         });
 
-        $this->assertEquals(-1, $result);
+        self::assertEquals(-1, $result);
     }
 
     public function testSimple(): void
     {
         $result = Arr::get($this->simpleArray, 'k2');
 
-        $this->assertEquals('v2', $result);
+        self::assertEquals('v2', $result);
     }
 
     public function testSimpleNotExists(): void
     {
         $result = Arr::get($this->simpleArray, 'k3');
 
-        $this->assertEquals(null, $result);
+        self::assertEquals(null, $result);
     }
 
     public function testDeep(): void
     {
         $result = Arr::get($this->deepArray, 'k1.k1_1.k1_2');
 
-        $this->assertEquals('v1_1', $result);
+        self::assertEquals('v1_1', $result);
     }
 
     public function testDeepNotExists(): void
     {
         $result = Arr::get($this->deepArray, 'k1.k1_1.k1_3');
 
-        $this->assertEquals(null, $result);
+        self::assertEquals(null, $result);
     }
 
 }

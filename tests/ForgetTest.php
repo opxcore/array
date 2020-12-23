@@ -5,12 +5,12 @@ use OpxCore\Arr\Arr;
 
 class ForgetTest extends TestCase
 {
-    protected $simpleArray = [
+    protected array $simpleArray = [
         'k1' => 'v1',
         'k2' => 'v2',
     ];
 
-    protected $deepArray = [
+    protected array $deepArray = [
         'k1' => [
             'k1_1' => [
                 'k1_2' => 'v1_1',
@@ -25,9 +25,9 @@ class ForgetTest extends TestCase
 
         $result = Arr::forget($array, null);
 
-        $this->assertEquals($this->simpleArray, $result);
+        self::assertEquals($this->simpleArray, $result);
 
-        $this->assertEquals($array, $result);
+        self::assertEquals($array, $result);
     }
 
     public function testEmptyKeys(): void
@@ -36,9 +36,9 @@ class ForgetTest extends TestCase
 
         $result = Arr::forget($array, '');
 
-        $this->assertEquals($this->simpleArray, $result);
+        self::assertEquals($this->simpleArray, $result);
 
-        $this->assertEquals($array, $result);
+        self::assertEquals($array, $result);
     }
 
     public function testEmptyArrayKeys(): void
@@ -47,7 +47,7 @@ class ForgetTest extends TestCase
 
         $result = Arr::forget($array, []);
 
-        $this->assertEquals($this->simpleArray, $result);
+        self::assertEquals($this->simpleArray, $result);
     }
 
     public function testSimpleArrayOneKey(): void
@@ -56,9 +56,9 @@ class ForgetTest extends TestCase
 
         $result = Arr::forget($array, 'k2');
 
-        $this->assertEquals(['k1' => 'v1'], $result);
+        self::assertEquals(['k1' => 'v1'], $result);
 
-        $this->assertEquals($array, $result);
+        self::assertEquals($array, $result);
     }
 
     public function testSimpleArrayMultipleKey(): void
@@ -67,9 +67,9 @@ class ForgetTest extends TestCase
 
         $result = Arr::forget($array, ['k1', 'k2']);
 
-        $this->assertEquals(['k3' => 'v3'], $result);
+        self::assertEquals(['k3' => 'v3'], $result);
 
-        $this->assertEquals($array, $result);
+        self::assertEquals($array, $result);
     }
 
     public function testDeepArrayOneKey(): void
@@ -78,14 +78,14 @@ class ForgetTest extends TestCase
 
         $result = Arr::forget($array, 'k1.k1_1.k1_2');
 
-        $this->assertEquals([
+        self::assertEquals([
             'k1' => [
                 'k1_1' => [],
                 'k1_2' => 'v2'
             ]
         ], $result);
 
-        $this->assertEquals($array, $result);
+        self::assertEquals($array, $result);
     }
 
     public function testDeepArrayOneKeyTwo(): void
@@ -94,13 +94,13 @@ class ForgetTest extends TestCase
 
         $result = Arr::forget($array, 'k1.k1_1');
 
-        $this->assertEquals([
+        self::assertEquals([
             'k1' => [
                 'k1_2' => 'v2'
             ]
         ], $result);
 
-        $this->assertEquals($array, $result);
+        self::assertEquals($array, $result);
     }
 
     public function testDeepArrayOneKeyMore(): void
@@ -109,7 +109,7 @@ class ForgetTest extends TestCase
 
         $result = Arr::forget($array, 'k1.k1_2.kn');
 
-        $this->assertEquals([
+        self::assertEquals([
             'k1' => [
                 'k1_1' => [
                     'k1_2' => 'v1_1',
@@ -118,7 +118,7 @@ class ForgetTest extends TestCase
             ],
         ], $result);
 
-        $this->assertEquals($array, $result);
+        self::assertEquals($array, $result);
     }
 
     public function testDeepArrayOneKeyAndMore(): void
@@ -127,7 +127,7 @@ class ForgetTest extends TestCase
 
         $result = Arr::forget($array, 'k1.k1_2.kn.kt');
 
-        $this->assertEquals([
+        self::assertEquals([
             'k1' => [
                 'k1_1' => [
                     'k1_2' => 'v1_1',
@@ -136,7 +136,7 @@ class ForgetTest extends TestCase
             ],
         ], $result);
 
-        $this->assertEquals($array, $result);
+        self::assertEquals($array, $result);
     }
 
     public function testDeepArrayOneKeys(): void
@@ -145,13 +145,13 @@ class ForgetTest extends TestCase
 
         $result = Arr::forget($array, 'k1.k1_1');
 
-        $this->assertEquals([
+        self::assertEquals([
             'k1' => [
                 'k1_2' => 'v2'
             ]
         ], $result);
 
-        $this->assertEquals($array, $result);
+        self::assertEquals($array, $result);
     }
 
     public function testDeepArrayMultiplyKeys(): void
@@ -160,13 +160,13 @@ class ForgetTest extends TestCase
 
         $result = Arr::forget($array, ['k1.k1_1.k1_2', 'k1.k1_2']);
 
-        $this->assertEquals([
+        self::assertEquals([
             'k1' => [
                 'k1_1' => [],
             ]
         ], $result);
 
-        $this->assertEquals($array, $result);
+        self::assertEquals($array, $result);
     }
 
 }

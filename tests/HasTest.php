@@ -9,28 +9,10 @@ class HasTest extends TestCase
     {
         $result = Arr::has($array, $keys);
 
-        $this->assertEquals($expected, $result);
+        self::assertEquals($expected, $result);
     }
 
-    public function test_Not_Array(): void
-    {
-        $array = 'value';
-        $keys = 'key';
-        $expected = false;
-
-        $this->runHasTest($array, $keys, $expected);
-    }
-
-    public function test_Null_Array(): void
-    {
-        $array = null;
-        $keys = 'key';
-        $expected = false;
-
-        $this->runHasTest($array, $keys, $expected);
-    }
-
-    public function test_Empty_Array(): void
+    public function testEmptyArray(): void
     {
         $array = [];
         $keys = 'key';
@@ -39,7 +21,7 @@ class HasTest extends TestCase
         $this->runHasTest($array, $keys, $expected);
     }
 
-    public function test_Null_Keys(): void
+    public function testNullKeys(): void
     {
         $array = ['k1' => 'v1'];
         $keys = null;
@@ -48,7 +30,7 @@ class HasTest extends TestCase
         $this->runHasTest($array, $keys, $expected);
     }
 
-    public function test_Empty_Keys(): void
+    public function testEmptyKeys(): void
     {
         $array = ['k1' => 'v1'];
         $keys = '';
@@ -57,7 +39,7 @@ class HasTest extends TestCase
         $this->runHasTest($array, $keys, $expected);
     }
 
-    public function test_Empty_Array_Keys(): void
+    public function testEmptyArrayKeys(): void
     {
         $array = ['k1' => 'v1'];
         $keys = [];
@@ -66,7 +48,7 @@ class HasTest extends TestCase
         $this->runHasTest($array, $keys, $expected);
     }
 
-    public function test_One_Key_Simple_Array_Has(): void
+    public function testOneKeySimpleArrayHas(): void
     {
         $array = ['k1' => 'v1', 'k2' => 'v2', 'k3' => 'v3'];
         $keys = 'k3';
@@ -75,7 +57,7 @@ class HasTest extends TestCase
         $this->runHasTest($array, $keys, $expected);
     }
 
-    public function test_One_Key_Simple_Array_Has_No(): void
+    public function testOneKeySimpleArrayHasNo(): void
     {
         $array = ['k1' => 'v1', 'k2' => 'v2', 'k3' => 'v3'];
         $keys = 'k4';
@@ -84,7 +66,7 @@ class HasTest extends TestCase
         $this->runHasTest($array, $keys, $expected);
     }
 
-    public function test_Two_Keys_Simple_Array_Has(): void
+    public function testTwoKeysSimpleArrayHas(): void
     {
         $array = ['k1' => 'v1', 'k2' => 'v2', 'k3' => 'v3'];
         $keys = ['k1', 'k3'];
@@ -93,7 +75,7 @@ class HasTest extends TestCase
         $this->runHasTest($array, $keys, $expected);
     }
 
-    public function test_Two_Keys_Simple_Array_Has_No_One(): void
+    public function testTwoKeysSimpleArrayHasNoOne(): void
     {
         $array = ['k1' => 'v1', 'k2' => 'v2', 'k3' => 'v3'];
         $keys = ['k1', 'k4'];
@@ -102,7 +84,7 @@ class HasTest extends TestCase
         $this->runHasTest($array, $keys, $expected);
     }
 
-    public function test_Two_Keys_Simple_Array_Has_No_One_Another(): void
+    public function testTwoKeysSimpleArrayHasNoOneAnother(): void
     {
         $array = ['k1' => 'v1', 'k2' => 'v2', 'k3' => 'v3'];
         $keys = ['k4', 'k1'];
@@ -111,7 +93,7 @@ class HasTest extends TestCase
         $this->runHasTest($array, $keys, $expected);
     }
 
-    public function test_Two_Keys_Simple_Array_Has_No_All(): void
+    public function testTwoKeysSimpleArrayHasNoAll(): void
     {
         $array = ['k1' => 'v1', 'k2' => 'v2', 'k3' => 'v3'];
         $keys = ['k4', 'k5'];
@@ -120,7 +102,7 @@ class HasTest extends TestCase
         $this->runHasTest($array, $keys, $expected);
     }
 
-    public function test_One_Key_Deep_Array_Has(): void
+    public function testOneKeyDeepArrayHas(): void
     {
         $array = ['k1_1' => ['k1_2' => 'val1'], 'k2_1' => ['k2_2' => 'val2'], 'k3_1' => ['k3_2' => 'val3']];
         $keys = 'k2_1.k2_2';
@@ -129,7 +111,7 @@ class HasTest extends TestCase
         $this->runHasTest($array, $keys, $expected);
     }
 
-    public function test_One_Key_Deep_Array_Has_Array(): void
+    public function testOneKeyDeepArrayHasArray(): void
     {
         $array = ['k1_1' => ['k1_2' => 'val1'], 'k2_1' => ['k2_2' => 'val2'], 'k3_1' => ['k3_2' => 'val3']];
         $keys = 'k2_1';
@@ -138,7 +120,7 @@ class HasTest extends TestCase
         $this->runHasTest($array, $keys, $expected);
     }
 
-    public function test_One_Key_Deep_Array_Has_No_Deeper(): void
+    public function testOneKeyDeepArrayHasNoDeeper(): void
     {
         $array = ['k1_1' => ['k1_2' => 'val1'], 'k2_1' => ['k2_2' => 'val2'], 'k3_1' => ['k3_2' => 'val3']];
         $keys = 'k2_1.k2_2.k2_3';
