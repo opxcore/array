@@ -1,41 +1,48 @@
 <?php
+/*
+ * This file is part of the OpxCore.
+ *
+ * Copyright (c) Lozovoy Vyacheslav <opxcore@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace OpxCore\Arr;
+
+use ArrayAccess;
+use InvalidArgumentException;
 
 class Arr
 {
     /**
      * Make dot notation for multi-dimensional associative array.
      *
-     * @param  array $array
+     * @param array $array
      *
      * @return  array
      */
-    public static function dot($array): ?array
+    public static function dot(array $array): ?array
     {
-        if (!is_array($array)) {
-            return null;
-        }
-
         return static::makeDotArray($array, '');
     }
 
     /**
      * Dot notation for multi-dimensional array recursion.
      *
-     * @param  array $array
-     * @param  string $prepend
+     * @param array $array
+     * @param string $prepend
      *
      * @return  array
      */
-    protected static function makeDotArray($array, $prepend): array
+    protected static function makeDotArray(array $array, string $prepend): array
     {
         $results = [[]];
 
         foreach ($array as $key => $value) {
             // If one of keys is numeric we have an unassociated array and we do not
             // need to iterate it. Just return this array as result for given key.
-            if(is_numeric($key)) {
+            if (is_numeric($key)) {
                 return [rtrim($prepend, '.') => $array];
             }
 
@@ -52,22 +59,20 @@ class Arr
     /**
      * Set a value to array using dot notation.
      *
-     * @param  array|null $array
-     * @param  string $key
-     * @param  mixed $value
+     * @param array|null $array
+     * @param string $key
+     * @param mixed $value
      *
      * @return  array
      */
-    public static function set(&$array, $key, $value): array
+    public static function set(?array &$array, string $key, $value): array
     {
         if ($array === null) {
             $array = [];
-        } elseif (!is_array($array)) {
-            throw new \InvalidArgumentException(sprintf('Array expected, got %s', gettype($array)));
         }
 
         if (!is_string($key) || $key === '') {
-            throw new \InvalidArgumentException('Given key is empty or not a string.');
+            throw new InvalidArgumentException('Given key is empty or not a string.');
         }
 
         $link = &$array;
@@ -87,12 +92,12 @@ class Arr
     /**
      * Check if an item or items exist in an array using "dot" notation.
      *
-     * @param  array $array
-     * @param  string|array $keys
+     * @param array $array
+     * @param string|array $keys
      *
      * @return  bool
      */
-    public static function has($array, $keys): bool
+    public static function has(array $array, $keys): bool
     {
         if (!is_array($array) || $keys === null || $keys === '' || $keys === []) {
             return false;
@@ -126,8 +131,8 @@ class Arr
     /**
      * Get a subset of the items from the given array.
      *
-     * @param  array $array
-     * @param  array|string $keys
+     * @param array $array
+     * @param array|string $keys
      *
      * @return  array
      */
@@ -139,13 +144,13 @@ class Arr
     /**
      * Return the last element in an array passing a given truth test.
      *
-     * @param  array $array
-     * @param  \Closure|null $callback
-     * @param  \Closure|mixed $default
+     * @param array $array
+     * @param callable|null $callback
+     * @param callable|mixed $default
      *
      * @return  mixed
      */
-    public static function last($array, \Closure $callback = null, $default = null)
+    public static function last(array $array, callable $callback = null, $default = null)
     {
         if ($array === null || $array === []) {
             return static::value($default);
@@ -157,25 +162,31 @@ class Arr
     /**
      * Returns value or result of closure.
      *
-     * @param  mixed|\Closure $value
+     * @param mixed $value
      *
      * @return  mixed
      */
     protected static function value($value)
     {
-        return $value instanceof \Closure ? $value() : $value;
+        if (is_callable($value)) {
+            $evaluated = $value();
+        } else {
+            $evaluated = $value;
+        }
+
+        return $evaluated;
     }
 
     /**
      * Return the first element in an array passing a given truth test.
      *
-     * @param  array $array
-     * @param  \Closure|null $callback
-     * @param  \Closure|mixed $default
+     * @param array $array
+     * @param callable|null $callback
+     * @param callable|mixed $default
      *
      * @return  mixed
      */
-    public static function first($array, \Closure $callback = null, $default = null)
+    public static function first(array $array, callable $callback = null, $default = null)
     {
         if ($array === null || $array === []) {
             return static::value($default);
@@ -197,13 +208,13 @@ class Arr
     /**
      * Get a value from the array, and remove it.
      *
-     * @param  array $array
-     * @param  string $key
-     * @param  \Closure|mixed $default
+     * @param array $array
+     * @param string $key
+     * @param callable|mixed $default
      *
      * @return  mixed
      */
-    public static function pull(&$array, $key, $default = null)
+    public static function pull(array &$array, string $key, $default = null)
     {
         $value = static::get($array, $key, $default);
 
@@ -215,13 +226,13 @@ class Arr
     /**
      * Get an item from an array using "dot" notation.
      *
-     * @param  \ArrayAccess|array $array
-     * @param  string $key
-     * @param  \Closure|mixed $default
+     * @param ArrayAccess|array $array
+     * @param string|null $key
+     * @param callable|mixed $default
      *
      * @return  mixed
      */
-    public static function get($array, $key, $default = null)
+    public static function get($array, ?string $key, $default = null)
     {
         if (!is_array($array)) {
             return static::value($default);
@@ -254,12 +265,12 @@ class Arr
     /**
      * Remove one or many items from the array using dot notation.
      *
-     * @param  array $array
-     * @param  array|string $keys
+     * @param array $array
+     * @param array|string $keys
      *
      * @return  array
      */
-    public static function forget(&$array, $keys): array
+    public static function forget(array &$array, $keys): array
     {
         if ($keys === null || $keys === '' || $keys === []) {
             return $array;
@@ -292,13 +303,13 @@ class Arr
     /**
      * Push value into the array.
      *
-     * @param  array $array
-     * @param  string $key
-     * @param  mixed $value
+     * @param array $array
+     * @param string $key
+     * @param mixed $value
      *
      * @return  array
      */
-    public static function push(&$array, $key, $value): array
+    public static function push(array &$array, string $key, $value): array
     {
         $arr = (array)static::get($array, $key, []);
 
