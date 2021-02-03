@@ -27,10 +27,10 @@ Regular arrays only:
 * `OpxCore\Arr\Arr::first($array, $callback, $default)`
 * `OpxCore\Arr\Arr::last($array, $callback, $default)`
 
-All `$default` values are optional and could be an instance of `\Closure` that returns value. By default they are always `null`.
+All `$default` values are optional and could be `callable` that returns value. By default, it is always `null`.
 
-_**Performance tips:** All methods for manipulating with dot notation are optimised for performance on dot notated
-keys. **If you are care about performance** much it is better to use regular array manipulations on non dot notated arrays._
+_**Performance tips:** All methods for manipulating with dot notation are optimised for performance on a dot notated
+keys. **If you are care about performance** much it is better to use regular array manipulations on non-dot notated arrays._
 
 ### Making a dot notated array
 ```php 
